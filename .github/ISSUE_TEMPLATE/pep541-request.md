@@ -1,5 +1,5 @@
 ---
-name: PEP 541 Request: PROJECT_NAME
+name: "PEP 541 Request: PROJECT_NAME"
 about: You want to claim or flag a project in accordance to PEP 541
 labels: PEP 541
 
