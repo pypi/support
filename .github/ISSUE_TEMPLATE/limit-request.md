@@ -1,6 +1,6 @@
 ---
 name: "Limit Request: PROJECT_NAME"
-about: You want to request an increase in PyPI upload file size limit
+about: You want to request an upload file-size limit increase
 labels: "limit request"
 
 ---
