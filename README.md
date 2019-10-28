@@ -3,7 +3,7 @@ This repository serves as an issue tracker for support requests related to using
 
 ## Issues which should be opened here
 
-Any issue which relates to an indivudal user or project, or requires administrator or moderator intervention, should be opened here. For example:
+Any issue which relates to an individual user or project, or requires administrator or moderator intervention, should be opened here. For example:
 
 * [PEP 541](https://www.python.org/dev/peps/pep-0541/) project name requests ([file a new issue](https://github.com/pypa/pypi-support/issues/new?template=pep541-request.md))
 * Network access issues ([file a new issue](https://github.com/pypa/pypi-support/issues/new?template=access-issues.md))
