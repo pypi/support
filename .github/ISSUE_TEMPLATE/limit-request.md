@@ -1,5 +1,5 @@
 ---
-name: "Limit Request: PROJECT_NAME"
+name: "Limit Request: PROJECT_NAME - 60MB"
 about: You want to request a file size limit increase
 labels: "limit request"
 
@@ -17,11 +17,15 @@ limit (a developmental release version number is fine).
 <!--
 Provide the name of the package and a link to its
 PyPI page, i.e. https://pypi.org/project/<PROJECT>
+
+Please update "PROJECT_NAME" in the issue title as well.
 -->
 
 **Size of release**
 <!--
 The size of your release, in megabytes, that is above the limit.
+
+Please update the size from "60MB" in the issue title as well. 
 -->
 
 **Which indexes**
