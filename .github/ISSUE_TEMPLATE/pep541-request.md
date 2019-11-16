@@ -32,6 +32,13 @@ Do you believe the project has been abandoned or otherwise has issues that
 justify this request.
 -->
 
+**Maintenance or replacement?**
+<!--
+If the transfer is successful, do you intend to continue maintenance of the package to or publish a different one?
+
+Please provide code repositories in either case if possible.
+-->
+
 **Contact and additional research**
 <!--
 Any attempt to contact current owner and/or research you may have conducted.
