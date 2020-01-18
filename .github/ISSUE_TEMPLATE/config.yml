@@ -1,0 +1,9 @@
+# Ref: https://help.github.com/en/github/building-a-strong-community/configuring-issue-templates-for-your-repository#configuring-the-template-chooser
+blank_issues_enabled: true  # default
+contact_links:
+- name: Feature Request, UX issue or bug?
+  url: https://github.com/pypa/warehouse/issues/new/choose
+  about: Please open these under `pypa/warehouse`.
+- name: Security Policy
+  url: https://pypi.org/security/
+  about: Please learn how to report security vulnerabilities here.
