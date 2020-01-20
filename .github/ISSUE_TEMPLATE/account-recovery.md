@@ -1,6 +1,7 @@
 ---
 name: Account Recovery
 about: Initiate an account recovery due to lost 2FA or inability to access email address
+title: Account recovery request
 labels: account-recovery 
 
 ---
