@@ -3,7 +3,6 @@ name: "Limit Request: PROJECT_NAME - 60MB"
 title: "Limit Request: PROJECT_NAME - 60MB"
 about: You want to request a file size limit increase
 labels: limit request
-assignees: di
 
 ---
 
