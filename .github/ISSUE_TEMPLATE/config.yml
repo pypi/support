@@ -3,10 +3,10 @@ blank_issues_enabled: true  # default
 contact_links:
 - name: Feature Request, UX issue or bug?
   url: https://github.com/pypa/warehouse/issues/new/choose
-  about: Please open these under `pypa/warehouse`.
+  about: Please open these under `pypa/warehouse`
 - name: Security Policy
   url: https://pypi.org/security/
-  about: Please learn how to report security vulnerabilities here.
+  about: Please learn how to report security vulnerabilities here
 - name: PyPA Code of Conduct
   url: https://www.pypa.io/en/latest/code-of-conduct/
   about: ❤ Be nice to other members of the community. ☮ Behave.
