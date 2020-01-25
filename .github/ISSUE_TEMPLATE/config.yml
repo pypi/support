@@ -7,3 +7,6 @@ contact_links:
 - name: Security Policy
   url: https://pypi.org/security/
   about: Please learn how to report security vulnerabilities here.
+- name: PyPA Code of Conduct
+  url: https://www.pypa.io/en/latest/code-of-conduct/
+  about: ❤ Be nice to other members of the community. ☮ Behave.
