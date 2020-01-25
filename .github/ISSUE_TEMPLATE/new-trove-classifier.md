@@ -1,7 +1,9 @@
 ---
 name: Trove Classifier Request
+title: Trove Classifier Request
 about: Request a new trove classifier
-labels: "classifier request"
+labels: classifier request
+
 ---
 
 Request to add a new Trove classifier.
