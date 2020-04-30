@@ -7,8 +7,8 @@ Any issue which relates to an individual user or project, or requires administra
 
 * [PEP 541](https://www.python.org/dev/peps/pep-0541/) project name requests ([file a new issue](https://github.com/pypa/pypi-support/issues/new?template=pep541-request.md))
 * Network access issues ([file a new issue](https://github.com/pypa/pypi-support/issues/new?template=access-issues.md))
-* Upload limit requests
-* Account recovery
+* Upload limit requests ([file a new issue](https://github.com/pypa/pypi-support/issues/new?labels=limit+request&template=limit-request.md&title=Limit+Request%3A+PROJECT_NAME+-+60MB))
+* Account recovery ([file a new issue](https://github.com/pypa/pypi-support/issues/new?labels=account-recovery&template=account-recovery.md&title=Account+recovery+request))
 * etc.
 
 ## Issues which should _not_ be opened here
