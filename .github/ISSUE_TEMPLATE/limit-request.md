@@ -1,6 +1,6 @@
 ---
-name: "Limit Request: PROJECT_NAME - "
-title: "Limit Request: PROJECT_NAME - "
+name: "Limit Request: PROJECT_NAME - 000 MB"
+title: "Limit Request: PROJECT_NAME - 000 MB"
 about: You want to request a file size limit or project total size limit increase
 labels: limit request
 
@@ -29,9 +29,9 @@ Please update "PROJECT_NAME" in the issue title as well.
 <!--
 The size of your release, in megabytes, that is above the limit.
 
-If you're hitting the upload file size limit, please add the size of your release to the title after the "-". 
+If you're hitting the upload file size limit, please update the size of your release from "000 MB" in the title. 
 
-If you're hitting the total project size limit, please add the size of your project to the title after the "-". 
+If you're hitting the total project size limit, please update the size of your project from "000 MB" in the title. 
 
 -->
 
