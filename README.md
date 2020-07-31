@@ -49,4 +49,4 @@ To read the most up to date version of our security policy, including directions
 Please [create a new issue here](https://github.com/pypa/pypi-support/issues/new/choose) and it will be transferred as necessary.
 
 ## Code of Conduct
-Everyone interacting in the Warehouse project's codebases, issue trackers, chat rooms, and mailing lists is expected to follow the [PyPA Code of Conduct](https://www.pypa.io/en/latest/code-of-conduct/).
+Everyone interacting in the PyPI's codebases, issue trackers, chat rooms, and mailing lists is expected to follow the [PSF Code of Conduct](https://github.com/pypa/.github/blob/main/CODE_OF_CONDUCT.md).
