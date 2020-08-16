@@ -30,7 +30,7 @@ Small (60MB-120MB) upload limits are generally granted for the following reasons
 * project contains a small JAR file
 * any other sufficiently motivated reason
 
-Large (120MB+) upload limts are generally granted for the following reasons:
+Large (120MB+) upload limits are generally granted for the following reasons:
 * project contains large compiled binaries to maintain platform/architecture/GPU support
 * project is associated with an established project or organization
 
