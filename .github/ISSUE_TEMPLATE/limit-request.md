@@ -25,6 +25,12 @@ PyPI page, i.e. https://pypi.org/project/<PROJECT>
 Please update "PROJECT_NAME" in the issue title as well.
 -->
 
+**Does this project already exist?**
+<!--
+This project MUST EXIST for an increased limit to be set. You can create an
+empty 0.0.0 release and delete it immediately if it doesn't already exist.
+-->
+
 **Size of release/project**
 <!--
 The size of your release, in megabytes, that is above the limit.
@@ -32,7 +38,6 @@ The size of your release, in megabytes, that is above the limit.
 If you're hitting the upload file size limit, please update the size of your release from "000 MB" in the title. 
 
 If you're hitting the total project size limit, please update the size of your project from "000 MB" in the title. 
-
 -->
 
 **Which indexes**
