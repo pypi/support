@@ -1,0 +1,225 @@
+---
+name: Network Access Issues
+about: Let us know if you're having trouble reaching PyPI
+labels: network
+title: ''
+issue_body: false  # default: true, adds a classic WSYWIG textarea, if on
+
+body:
+- type: markdown
+  attributes:
+    value: |
+      ⚠
+      This issue should be for problems accessing PyPI itself, including:
+      * pypi.org
+      * test.pypi.org
+      * files.pythonhosted.org
+  
+      This issue **should NOT** be for any non-PyPI properties (like
+      python.org, docs.python.org, etc.)
+
+- type: input
+  attributes:
+    label: My Platform
+    description: |
+      Any details about your specific platform:
+      * If the problem is in the browser, what browser, version, and OS?
+      * If the problem is with a command-line tool, what version of that tool?
+      * If the problem is with connecting to PyPI, include some details about
+        your network, including SSL/TLS implementation in use, internet service
+        provider, and if there are any firewalls or proxies in use.
+  validations:
+    required: true
+
+
+- type: markdown
+  attributes:
+    value: |
+      **Network telemetry**
+
+      Providing this information is crucial in helping diagnose
+      networking issues for PyPI.
+
+- type: input
+  attributes:
+    label: Fastly Debug
+    description: |
+      Describe the steps to reproduce this bug.
+      Note that this output is optional, as it encodes identifying
+      information about your browser, public IP, and location.
+
+      If you have a browser that reproduces your access issue, go to
+      https://fastly-debug.com, when the page has loaded copy and paste
+      the base64 encoded blob at the top of the page into the box below.
+
+      Note that you may need to disable ad-blockers and privacy
+      protection extensions in order for this page to operate, as it
+      makes numerous calls to servers on our CDN's network that look
+      concerning to those tools.
+    value: |
+      ``` (paste your output on the next line)
+
+      ```
+  validations:
+    required: false
+
+- type: input
+  attributes:
+    label: DNS Resolution
+    description: |
+      Provide the servers you're querying for DNS here if you know. They can be
+      found in /etc/resolv.conf on most linux servers, or your network settings
+      for MacOS and Windows.
+
+      dig is used for these examples, if you are familiar with another tool that
+      performs a similar utility, provide that output.
+    value: |
+      ```console (paste your output after the line with the dig command)
+      $ dig pypi.org A
+
+      ```
+
+      ```console (paste your output after the line with the dig command)
+      $ dig pypi.org AAAA
+
+      ```
+
+      ```console (paste your output after the line with the dig command)
+      $ dig files.pythonhosted.org A
+
+      ```
+
+      ```console (paste your output after the line with the dig command)
+      $ dig files.pythonhosted.org AAAA
+
+      ```
+  validations:
+    required: true
+
+
+- type: markdown
+  attributes:
+    value: |
+      **Traceroutes**
+
+      `traceroute` is used for these examples, if you are familiar with another tool
+      that performs a similar utility, provide that output.
+- type: input
+  attributes:
+    label: IPv4
+    value: |
+      ```console (paste your output after the line with the traceroute command)
+      $ traceroute pypi.org
+
+      ```
+
+      ```console (paste your output after the line with the traceroute command)
+      $ traceroute files.pythonhosted.org
+
+      ```
+  validations:
+    required: true
+- type: input
+  attributes:
+    label: IPv6 (If available)
+    value: |
+      ```console (paste your output after the line with the traceroute command)
+      $ traceroute6 pypi.org
+
+      ```
+
+      ```console (paste your output after the line with the traceroute command)
+      $ traceroute6 files.pythonhosted.org
+
+      ```
+  validations:
+    required: false
+
+
+- type: markdown
+  attributes:
+    value: |
+      **HTTPS Requests**
+
+      These provide a more holistic view of what is going on, and the
+      ways that PyPI is generally accessed. They can also provide insight
+      into TLS issues that may be occurring.
+- type: input
+  attributes:
+    label: IPv4
+    value: |
+      ```console (paste your output after the line with the curl command)
+      $ curl -vvv -I --ipv4 https://pypi.org/pypi/pip/json
+
+      ```
+
+      ```console (paste your output after the line with the curl command)
+      $ curl -vvv -I --ipv4 https://files.pythonhosted.org/packages/ae/e8/2340d46ecadb1692a1e455f13f75e596d4eab3d11a57446f08259dee8f02/pip-10.0.1.tar.gz
+
+      ```
+  validations:
+    required: true
+- type: input
+  attributes:
+    label: IPv6 (If available)
+    value: |
+      ```console (paste your output after the line with the curl command)
+      $ curl -vvv -I --ipv6 https://pypi.org/pypi/pip/json
+
+      ```
+
+      ```console (paste your output after the line with the curl command)
+      $ curl -vvv -I --ipv6 https://files.pythonhosted.org/packages/ae/e8/2340d46ecadb1692a1e455f13f75e596d4eab3d11a57446f08259dee8f02/pip-10.0.1.tar.gz
+
+      ```
+  validations:
+    required: false
+
+
+- type: markdown
+  attributes:
+    value: |
+      **TLS Debug**
+- type: input
+  attributes:
+    label: IPv4
+    value: |
+      ```console (paste your output after the line with the openssl command)
+      $ echo -n | openssl s_client -4 -connect pypi.org:443
+
+      ```
+
+      ```console (paste your output after the line with the openssl command)
+      $ echo -n | openssl s_client -4 -connect files.pythonhosted.org:443
+
+      ```
+  validations:
+    required: true
+- type: input
+  attributes:
+    label: IPv6 (If available)
+    value: |
+      ```console (paste your output after the line with the openssl command)
+      $ echo -n | openssl s_client -6 -connect pypi.org:443
+
+      ```
+
+      ```console (paste your output after the line with the openssl command)
+      $ echo -n | openssl s_client -6 -connect files.pythonhosted.org:443
+
+      ```
+  validations:
+    required: false
+
+
+- type: checkboxes
+  attributes:
+    label: Code of Conduct
+    description: |
+      Read the [PSF Code of Conduct][CoC] first.
+
+      [CoC]: https://github.com/pypa/.github/blob/main/CODE_OF_CONDUCT.md
+    options:
+    - label: I agree to follow the PSF Code of Conduct
+      required: true
+...

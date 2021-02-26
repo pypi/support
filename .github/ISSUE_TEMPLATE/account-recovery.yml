@@ -1,0 +1,43 @@
+---
+name: Account Recovery
+about: Initiate an account recovery due to lost 2FA or inability to access email address
+title: Account recovery request
+labels: account-recovery 
+issue_body: false  # default: true, adds a classic WSYWIG textarea, if on
+
+body:
+- type: markdown
+  attributes:
+    value: |
+      **Request for account recovery.**
+
+- type: input
+  attributes:
+    label: PyPI Username
+    description: >-
+      Enter your PyPI `username` wrapped with single backticks
+  validations:
+    required: true
+
+- type: input
+  attributes:
+    label: Reason for request
+    description: |
+      State the reason for your request
+      - Lost access to email address
+      - Lost 2FA authentication app or security token
+  validations:
+    required: true
+
+
+- type: checkboxes
+  attributes:
+    label: Code of Conduct
+    description: |
+      Read the [PSF Code of Conduct][CoC] first.
+
+      [CoC]: https://github.com/pypa/.github/blob/main/CODE_OF_CONDUCT.md
+    options:
+    - label: I agree to follow the PSF Code of Conduct
+      required: true
+...

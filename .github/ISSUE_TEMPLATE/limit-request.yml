@@ -1,0 +1,92 @@
+---
+name: Limit Request: PROJECT_NAME - 000 MB
+title: Limit Request: PROJECT_NAME - 000 MB
+about: >-
+  You want to request a file size limit or project total size
+  limit increase
+labels: limit request
+issue_body: false  # default: true, adds a classic WSYWIG textarea, if on
+
+body:
+- type: markdown
+  attributes:
+    value: |
+      If you can't upload your project's release to PyPI because you're
+      hitting the upload file size limit or the project total size
+      limit, we can sometimes increase your limit.
+
+      If you're hitting the upload file size limit, make sure you've
+      uploaded at least one release for the project that's under the
+      limit (a developmental release version number is fine).
+
+- type: input
+  attributes:
+    label: Project
+    description: |
+      Provide the name of the package and a link to its
+      PyPI page, i.e. https://pypi.org/project/<PROJECT>
+
+      Please **update "PROJECT_NAME"** in the issue title as well.
+  validations:
+    required: true
+
+- type: checkboxes
+  attributes:
+    label: Does this project already exist?
+    description: |
+      This project **MUST EXIST** for an increased limit to be set.
+      You can create an empty 0.0.0 release and delete it immediately if
+      it doesn't already exist.
+    options:
+    - label: Yes
+      required: true
+
+- type: input
+  attributes:
+    label: Size of release/project
+    description: |
+      The size of your release, in megabytes, that is above the limit.
+
+      If you're hitting the *upload file* size limit, please **update
+      the size** of your release from "000 MB" in the title. 
+
+      If you're hitting the *total project* size limit, please update
+      the size of your project from "000 MB" in the title. 
+  validations:
+    required: true
+
+- type: dropdown
+  attributes:
+    label: Which indexes
+    description: >-
+      Which index/indexes you need the increase for
+      (PyPI, Test PyPI, or both)
+    multiple: true
+    options:
+    - PyPI
+    - TestPyPI
+
+- type: input
+  attributes:
+    label: Reasons for the request
+    description: |
+      A description of the project, and the reason for the
+      additional size.
+
+      If you expect your release sizes/total project size to increase in
+      the future, mention it here.
+  validations:
+    required: true
+
+
+- type: checkboxes
+  attributes:
+    label: Code of Conduct
+    description: |
+      Read the [PSF Code of Conduct][CoC] first.
+
+      [CoC]: https://github.com/pypa/.github/blob/main/CODE_OF_CONDUCT.md
+    options:
+    - label: I agree to follow the PSF Code of Conduct
+      required: true
+...
