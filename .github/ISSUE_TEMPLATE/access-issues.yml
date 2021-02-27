@@ -106,7 +106,7 @@ body:
       that performs a similar utility, provide that output.
 - type: input
   attributes:
-    label: IPv4
+    label: Traceroutes / IPv4
     value: |
       ```console (paste your output after the line with the traceroute command)
       $ traceroute pypi.org
@@ -121,7 +121,7 @@ body:
     required: true
 - type: input
   attributes:
-    label: IPv6 (If available)
+    label: Traceroutes / IPv6 (If available)
     value: |
       ```console (paste your output after the line with the traceroute command)
       $ traceroute6 pypi.org
@@ -146,7 +146,7 @@ body:
       into TLS issues that may be occurring.
 - type: input
   attributes:
-    label: IPv4
+    label: HTTPS Requests / IPv4
     value: |
       ```console (paste your output after the line with the curl command)
       $ curl -vvv -I --ipv4 https://pypi.org/pypi/pip/json
@@ -161,7 +161,7 @@ body:
     required: true
 - type: input
   attributes:
-    label: IPv6 (If available)
+    label: HTTPS Requests / IPv6 (If available)
     value: |
       ```console (paste your output after the line with the curl command)
       $ curl -vvv -I --ipv6 https://pypi.org/pypi/pip/json
@@ -182,7 +182,7 @@ body:
       **TLS Debug**
 - type: input
   attributes:
-    label: IPv4
+    label: TLS Debug / IPv4
     value: |
       ```console (paste your output after the line with the openssl command)
       $ echo -n | openssl s_client -4 -connect pypi.org:443
@@ -197,7 +197,7 @@ body:
     required: true
 - type: input
   attributes:
-    label: IPv6 (If available)
+    label: TLS Debug / IPv6 (If available)
     value: |
       ```console (paste your output after the line with the openssl command)
       $ echo -n | openssl s_client -6 -connect pypi.org:443
