@@ -40,7 +40,7 @@ body:
       You can create an empty 0.0.0 release and delete it immediately if
       it doesn't already exist.
     options:
-    - label: Yes
+    - label: "Yes"  # should be a str but YAML parses unwrapped yes/no as bool
       required: true
 
 - type: input
