@@ -67,6 +67,8 @@ body:
     options:
     - PyPI
     - TestPyPI
+  validations:
+    required: true
 
 - type: input
   attributes:
