@@ -18,7 +18,7 @@ body:
       This issue **should NOT** be for any non-PyPI properties (like
       python.org, docs.python.org, etc.)
 
-- type: input
+- type: textarea
   attributes:
     label: My Platform
     description: |
@@ -40,7 +40,7 @@ body:
       Providing this information is crucial in helping diagnose
       networking issues for PyPI.
 
-- type: input
+- type: textarea
   attributes:
     label: Fastly Debug
     description: |
@@ -63,7 +63,7 @@ body:
   validations:
     required: false
 
-- type: input
+- type: textarea
   attributes:
     label: DNS Resolution
     description: |
@@ -104,7 +104,7 @@ body:
 
       `traceroute` is used for these examples, if you are familiar with another tool
       that performs a similar utility, provide that output.
-- type: input
+- type: textarea
   attributes:
     label: Traceroutes / IPv4
     value: |
@@ -119,7 +119,7 @@ body:
       ```
   validations:
     required: true
-- type: input
+- type: textarea
   attributes:
     label: Traceroutes / IPv6 (If available)
     value: |
@@ -144,7 +144,7 @@ body:
       These provide a more holistic view of what is going on, and the
       ways that PyPI is generally accessed. They can also provide insight
       into TLS issues that may be occurring.
-- type: input
+- type: textarea
   attributes:
     label: HTTPS Requests / IPv4
     value: |
@@ -159,7 +159,7 @@ body:
       ```
   validations:
     required: true
-- type: input
+- type: textarea
   attributes:
     label: HTTPS Requests / IPv6 (If available)
     value: |
@@ -180,7 +180,7 @@ body:
   attributes:
     value: |
       **TLS Debug**
-- type: input
+- type: textarea
   attributes:
     label: TLS Debug / IPv4
     value: |
@@ -195,7 +195,7 @@ body:
       ```
   validations:
     required: true
-- type: input
+- type: textarea
   attributes:
     label: TLS Debug / IPv6 (If available)
     value: |

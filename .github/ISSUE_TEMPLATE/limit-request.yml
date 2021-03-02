@@ -70,7 +70,7 @@ body:
   validations:
     required: true
 
-- type: input
+- type: textarea
   attributes:
     label: Reasons for the request
     description: |
