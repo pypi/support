@@ -1,6 +1,6 @@
 ---
 name: Account Recovery
-about: Initiate an account recovery due to lost 2FA or inability to access email address
+description: Initiate an account recovery due to lost 2FA or inability to access email address
 title: Account recovery request
 labels: account-recovery 
 issue_body: false  # default: true, adds a classic WSYWIG textarea, if on

@@ -3,7 +3,7 @@ name: >-
   Limit Request: PROJECT_NAME - 000 MB
 title: >-
   Limit Request: PROJECT_NAME - 000 MB
-about: >-
+description: >-
   You want to request a file size limit or project total size
   limit increase
 labels: limit request
