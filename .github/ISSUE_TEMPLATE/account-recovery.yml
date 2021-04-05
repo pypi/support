@@ -40,4 +40,15 @@ body:
     options:
     - label: I agree to follow the PSF Code of Conduct
       required: true
+
+- type: checkboxes
+  attributes:
+    label: acknowledgement
+    description: |
+      By their nature account recovery issues are labor intensive. The PyPI team has limited resources available for their completion.
+
+      There may be a delay of a week or more between responses for these issues.
+    options:
+    - label: I understand that it may take a significant amount of time to process my account recovery request.
+      required: true
 ...
