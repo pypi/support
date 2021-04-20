@@ -2,7 +2,6 @@
 name: Network Access Issues
 description: Let us know if you're having trouble reaching PyPI
 labels: network
-title: ''
 issue_body: false  # default: true, adds a classic WSYWIG textarea, if on
 
 body:
