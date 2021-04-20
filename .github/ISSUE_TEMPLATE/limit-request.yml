@@ -7,7 +7,6 @@ description: >-
   You want to request a file size limit or project total size
   limit increase
 labels: limit request
-issue_body: false  # default: true, adds a classic WSYWIG textarea, if on
 
 body:
 - type: markdown
