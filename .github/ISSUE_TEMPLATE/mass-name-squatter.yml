@@ -24,14 +24,12 @@ body:
 
 - type: textarea
   attributes:
-    label: Reasons for the request
+    label: Additional information
     description: |
-      Why do you think the user is engaging in mass project name squatting?
+      Any information you think might be useful for the moderators.
 
-      Please provide details about the number of projects, whether you consider
-      them invalid and why.
   validations:
-    required: true
+    required: false
 
 - type: checkboxes
   attributes:
