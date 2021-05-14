@@ -1,0 +1,44 @@
+---
+name: "Mass name squat by user: USERNAME"
+title: "Mass name squat by user: USERNAME"
+description: You want to report mass project name squatting by a PyPI user
+labels: mass name squat
+
+body:
+- type: markdown
+  attributes:
+    value: |
+      A PyPI user has registered a large number of projects with what you
+      believe is an attempt to reserve their names or otherwise abuse the
+      service.
+      
+- type: input
+  attributes:
+    label: PyPI user performing the mass project name squatting
+    description: |
+      Please also **update the issue title** as well.
+    value: |
+      https://pypi.org/user/USERNAME
+  validations:
+    required: true
+
+- type: textarea
+  attributes:
+    label: Additional information
+    description: |
+      Any information you think might be useful for the moderators.
+
+  validations:
+    required: false
+
+- type: checkboxes
+  attributes:
+    label: Code of Conduct
+    description: |
+      Read the [PSF Code of Conduct][CoC] first.
+
+      [CoC]: https://github.com/pypa/.github/blob/main/CODE_OF_CONDUCT.md
+    options:
+    - label: I agree to follow the PSF Code of Conduct
+      required: true
+...
