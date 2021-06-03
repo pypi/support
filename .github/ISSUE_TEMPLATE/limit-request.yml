@@ -22,10 +22,10 @@ body:
 
 - type: input
   attributes:
-    label: Project
+    label: Project URL
     description: |
-      Provide the name of the package and a link to its
-      PyPI page, i.e. https://pypi.org/project/<PROJECT>
+      Provide a link to the PyPI page for the project in question,
+      i.e. https://pypi.org/project/<PROJECT_NAME>
 
       Please **update "PROJECT_NAME"** in the issue title as well.
   validations:
