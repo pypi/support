@@ -1,0 +1,97 @@
+---
+name: Size Limit Request (per-file)
+title: "File Limit Request: PROJECT_NAME - 000 MB"
+description: Your release files are larger than the per-file limit.
+labels: limit request
+
+body:
+  - type: markdown
+    attributes:
+      value: >
+        If you can't upload your project's release to PyPI because you're
+        hitting the file size limit, we can sometimes increase your limit.
+
+  - type: input
+    attributes:
+      label: Project URL
+      placeholder: "https://pypi.org/project/<PROJECT_NAME>"
+      description: |
+        Provide a link to the PyPI page for the project.
+    validations:
+      required: true
+
+  - type: checkboxes
+    attributes:
+      label: Does this project already exist?
+      description: |
+        This project **MUST EXIST** for an increased limit to be set.
+
+        An empty 0.0.0 release may be uploaded, if the project doesn't exist. You can delete this release immediately after uploading it.
+      options:
+        - label: "Yes" # should be a str but YAML parses unwrapped yes/no as bool
+          required: true
+
+  - type: input
+    attributes:
+      label: New Limit
+      description: >
+        What is the new size limit, in megabytes, that you are requesting?
+      placeholder: 0 MB
+    validations:
+      required: true
+
+  - type: checkboxes
+    attributes:
+      description: >
+        The title of this issue should be updated, to mention the project name
+        and the requested new limit.
+      options:
+        - label: I have updated the title.
+          required: true
+
+  - type: dropdown
+    attributes:
+      label: Which indexes
+      description: >
+        Which index/indexes you need the increase on?
+        (PyPI, Test PyPI, or both)
+      multiple: true
+      options:
+        - PyPI
+        - TestPyPI
+    validations:
+      required: true
+
+  # About the request
+  - type: textarea
+    attributes:
+      label: About the project
+      description: |
+        What the project is and how long it has been active.
+
+        If you have made efforts to reduce the size of your PyPI releases, mention it here.
+        If you bundle other packages in your project, mention it here.
+        If you bundle example data in your project, mention it here.
+    validations:
+      required: true
+
+  - type: textarea
+    attributes:
+      label: Reasons for the request
+      description: |
+        Provide the reason for requesting the additional limit.
+
+        If you expect your release sizes/total project size to increase in the future, mention it here.
+    validations:
+      required: true
+
+  - type: checkboxes
+    attributes:
+      label: Code of Conduct
+      description: |
+        Read the [PSF Code of Conduct][CoC] first.
+
+        [CoC]: https://github.com/pypa/.github/blob/main/CODE_OF_CONDUCT.md
+      options:
+        - label: I agree to follow the PSF Code of Conduct
+          required: true
