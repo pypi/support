@@ -1,6 +1,6 @@
 ---
 name: Network Access Issues
-description: Let us know if you're having trouble reaching PyPI
+description: You are having trouble reaching PyPI
 labels: network
 
 body:
