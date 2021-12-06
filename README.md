@@ -27,7 +27,7 @@ resources, and also generally do not provide a good user experience.
 
 Small (60MB-120MB) upload limits are generally granted for the following reasons:
 * project contains small pre-trained models
-* project contains a small JAR file
+* project contains a small JAR file / executable
 * any other sufficiently motivated reason
 
 Large (120MB+) upload limits are generally granted for the following reasons:
@@ -37,7 +37,7 @@ Large (120MB+) upload limits are generally granted for the following reasons:
 Upload limits are generally denied for the following reasons:
 * project makes nightly releases and/or is published frequently
 * project contains large pre-trained machine learning models
-* project includes a large JAR file
+* project includes a large JAR file / executable
 * project includes a runtime for another programming language
 * project is not associated with an established project or organization
 * project has not made a best-effort to reduce release size
