@@ -42,6 +42,7 @@ body:
 
   - type: checkboxes
     attributes:
+      label: Update issue title
       description: >
         The title of this issue should be updated, to mention the project name
         and the requested new limit.
