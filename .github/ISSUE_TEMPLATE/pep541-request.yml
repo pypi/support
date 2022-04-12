@@ -18,7 +18,8 @@ body:
   attributes:
     label: Project to be claimed
     description: |
-      Provide the name of the package and a link to its PyPI page
+      Provide the name of the package and a link to its PyPI page by replacing
+      `PROJECT_NAME` with the name of the project in PyPI.
 
       Please also **update the issue title** as well.
     value: |
@@ -31,7 +32,7 @@ body:
     label: Your PyPI username
     description: |
       To help moderators deal with the transfer please confirm your
-      PyPI username
+      PyPI username.
     value: |
       `USER_NAME`: https://pypi.org/user/USER_NAME
   validations:
@@ -60,17 +61,18 @@ body:
   attributes:
     label: Source code repositories URLs
     description: |
-      Please provide code repositories in regardless of the previous
-      answer if possible.
+      Please provide code repositories for both the current project and the
+      one you intend to publish in its place.
   validations:
-    required: false
+    required: true
 
 - type: textarea
   attributes:
     label: Contact and additional research
     description: |
       Please document below any attempts to contact current owner and/or
-      research you may have conducted.
+      research you may have conducted. Note moderators are obliged to contact
+      owners independently.
   validations:
     required: true
 
