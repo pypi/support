@@ -1,7 +1,7 @@
 ---
 name: Size Limit Request (project-wide)
 title: "Project Limit Request: PROJECT_NAME - 00 GB"
-description: Your project has hit the total project size limit.
+description: "Your project has hit the total project size limit. (default: 10 GB)"
 labels: limit request
 
 body:
