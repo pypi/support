@@ -5,11 +5,13 @@ This repository serves as an issue tracker for support requests related to using
 
 Any issue which relates to an individual user or project, or requires administrator or moderator intervention, should be opened here. For example:
 
-* [PEP 541](https://www.python.org/dev/peps/pep-0541/) project name requests ([file a new issue](https://github.com/pypa/pypi-support/issues/new?labels=PEP+541&template=pep541-request.yml&title=PEP+541+Request%3A+PROJECT_NAME))
-* Network access issues ([file a new issue](https://github.com/pypa/pypi-support/issues/new?labels=network&template=access-issues.yml))
-* Upload limit requests ([file a new issue](https://github.com/pypa/pypi-support/issues/new?labels=limit+request&template=limit-request.yml&title=Limit+Request%3A+PROJECT_NAME+-+60MB))
-* Account recovery ([file a new issue](https://github.com/pypa/pypi-support/issues/new?labels=account-recovery&template=account-recovery.yml&title=Account+recovery+request))
+* [PEP 541](https://www.python.org/dev/peps/pep-0541/) project name requests
+* Network access issues
+* Upload limit requests
+* Account recovery
 * etc.
+
+See [this page](https://github.com/pypi/support/issues/new/choose) for the exact list.
 
 ## Issues which should _not_ be opened here
 Any issue that affects how PyPI works for all users, or require code or configuration changes, should _not_ be opened here. For example:
