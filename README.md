@@ -27,12 +27,12 @@ Generally, projects should try to minimize the size of their distributions as
 much as possible. Large distributions consume significant amounts of PyPI's
 resources, and also generally do not provide a good user experience.
 
-Small (60MB-120MB) upload limits are generally granted for the following reasons:
+Small (up to 200MiB) upload limits are generally granted for the following reasons:
 * project contains small pre-trained models
 * project contains a small JAR file / executable
 * any other sufficiently motivated reason
 
-Large (120MB+) upload limits are generally granted for the following reasons:
+Large (more than 200MiB) upload limits are generally granted for the following reasons:
 * project contains large compiled binaries to maintain platform/architecture/GPU support
 * project is associated with an established project or organization
 
