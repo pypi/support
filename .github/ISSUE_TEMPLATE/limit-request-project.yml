@@ -1,7 +1,7 @@
 ---
 name: Size Limit Request (project-wide)
-title: "Project Limit Request: PROJECT_NAME - 00 GB"
-description: "Your project has hit the total project size limit. (default: 10 GB)"
+title: "Project Limit Request: PROJECT_NAME - 00 GiB"
+description: "Your project has hit the total project size limit. (default: 10 GiB)"
 labels: limit request
 
 body:
@@ -76,17 +76,17 @@ body:
     attributes:
       label: How large is each release?
       description: |
-        Use MB to describe the size, and provide a summary of what files are uploaded in each release.
+        Use MiB to describe the size, and provide a summary of what files are uploaded in each release.
 
         If you have made efforts to reduce the size of your PyPI releases, mention it here.
         If you bundle other packages in your project, mention it here.
         If you bundle example data in your project, mention it here.
       placeholder: |
-        ~200 MB total.
+        ~200 MiB total.
 
-        2 Linux wheels at ~60 MB, due to bundled libxml binaries.
-        6 Windows/MacOS wheels at ~10 MB.
-        The source tarball at ~10 MB.
+        2 Linux wheels at ~60 MiB, due to bundled libxml binaries.
+        6 Windows/MacOS wheels at ~10 MiB.
+        The source tarball at ~10 MiB.
     validations:
       required: true
 

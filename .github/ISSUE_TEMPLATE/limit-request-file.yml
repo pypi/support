@@ -1,7 +1,7 @@
 ---
 name: Size Limit Request (per-file)
-title: "File Limit Request: PROJECT_NAME - 000 MB"
-description: "Your release files are larger than the per-file limit. (default: 100 MB)"
+title: "File Limit Request: PROJECT_NAME - 000 MiB"
+description: "Your release files are larger than the per-file limit. (default: 100 MiB)"
 labels: limit request
 
 body:
@@ -36,7 +36,7 @@ body:
       label: New Limit
       description: >
         What is the new size limit, in megabytes, that you are requesting?
-      placeholder: 0 MB
+      placeholder: 0 MiB
     validations:
       required: true
 
