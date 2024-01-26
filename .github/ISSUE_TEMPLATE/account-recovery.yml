@@ -25,6 +25,7 @@ body:
       State the reason for your request
       - Lost access to email address
       - Lost 2FA authentication app or security token
+      - Lost recovery codes 
   validations:
     required: true
 
@@ -46,8 +47,15 @@ body:
     description: |
       By their nature account recovery issues are labor intensive. The PyPI team has limited resources available for their completion.
 
-      There may be a delay of a week or more between responses for these issues.
+      There may be a delay of few months or more between responses for these issues.
     options:
     - label: I understand that it may take a significant amount of time to process my account recovery request.
       required: true
+      
+- type: checkboxes
+  attributes:
+    label: Recovery code lost
+    options:
+    - label: I have lost my 2FA authentication app or security token, and my recovery code as well
+      required: false
 ...
