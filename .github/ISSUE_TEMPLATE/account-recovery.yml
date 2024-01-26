@@ -47,7 +47,7 @@ body:
     description: |
       By their nature account recovery issues are labor intensive. The PyPI team has limited resources available for their completion.
 
-      There may be a delay of few months or more between responses for these issues.
+      There may be an extended delay between responses for these issues.
     options:
     - label: I understand that it may take a significant amount of time to process my account recovery request.
       required: true
