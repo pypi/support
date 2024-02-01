@@ -1,3 +1,13 @@
+###https://github.com/pypi/support/blob/main/README.md
+ 
+ git init;
+  time;
+  date;
+
+import os;
+import time;
+set;
+
 # PyPI Support
 This repository serves as an issue tracker for support requests related to using <https://pypi.org>.
 
