@@ -20,7 +20,7 @@ Any issue that affects how PyPI works for all users, or require code or configur
 * Usability issues
 * Bugs
 
-These issues should be opened against [`pypa/warehouse`](https://github.com/pypa/warehouse/issues/new/choose) instead.
+These issues should be opened against [`pypi/warehouse`](https://github.com/pypi/warehouse/issues/new/choose) instead.
 
 ## Guidelines for upload limit requests
 Generally, projects should try to minimize the size of their distributions as
