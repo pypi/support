@@ -28,6 +28,14 @@ body:
   validations:
     required: true
 
+- type: checkboxes
+  attributes:
+    label: Recovery Codes
+    description: |
+      Every PyPI account generates eight recovery codes when 2FA is enabled, for use when the 2FA app or security token is lost. 
+    options:
+    - label: I never generated or have lost access to the recovery codes for my account
+      required: true
 
 - type: checkboxes
   attributes:
