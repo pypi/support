@@ -10,8 +10,6 @@ import pypi_utils
 import gh_utils
 
 
-PYPI = "pypi"
-REPO = "support"
 PYPI_USER_HEADER = "PyPI Username"
 
 
@@ -71,8 +69,12 @@ def format_markdown_gh_user_link(gh_user: str) -> str:
 if __name__ == "__main__":
     issue_number = os.environ.get("ISSUE_NUMBER", "4343")
     github_token = os.environ.get("GITHUB_TOKEN", None)
+    github_issue_user = os.environ.get("GITHUB_ISSUE_USER", "pypi")
+    github_issue_repo = os.environ.get("GITHUB_ISSUE_REPO", "support")
 
-    issue_data = gh_utils.fetch_issue_details(PYPI, REPO, issue_number, github_token=github_token)
+    issue_data = gh_utils.fetch_issue_details(
+        github_issue_user, github_issue_repo, issue_number, github_token=github_token
+    )
 
     gh_user = issue_data["user"]
     gh_user_link = format_markdown_gh_user_link(gh_user)
@@ -91,7 +93,11 @@ if __name__ == "__main__":
     # If the pypi user is not a maintainer for any packages
     if not packages:
         Xadd_issue_comment(
-            f"User {pypi_user_link} has no packages", PYPI, REPO, issue_number, github_token=github_token
+            f"User {pypi_user_link} has no packages",
+            github_issue_user,
+            github_issue_repo,
+            issue_number,
+            github_token=github_token,
         )
         sys.exit()
 
@@ -141,6 +147,6 @@ if __name__ == "__main__":
 
 This action was performed by a bot. Account recovery requires manual approval by processing by PyPI."""
 
-    Xadd_issue_comment(comment, PYPI, REPO, issue_number, github_token=github_token)
+    Xadd_issue_comment(comment, github_issue_user, github_issue_repo, issue_number, github_token=github_token)
     if label:
-        Xadd_label_to_issue(label, PYPI, REPO, issue_number, github_token=github_token)
+        Xadd_label_to_issue(label, github_issue_user, github_issue_repo, issue_number, github_token=github_token)
