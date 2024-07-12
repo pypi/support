@@ -92,7 +92,7 @@ if __name__ == "__main__":
 
     # If the pypi user is not a maintainer for any packages
     if not packages:
-        Xadd_issue_comment(
+        gh_utils.add_issue_comment(
             f"User {pypi_user_link} has no packages",
             github_issue_owner,
             github_issue_repo,
@@ -147,6 +147,8 @@ if __name__ == "__main__":
 
 This action was performed by a bot. Account recovery requires manual approval by processing by PyPI."""
 
-    Xadd_issue_comment(comment, github_issue_owner, github_issue_repo, issue_number, github_token=github_token)
+    gh_utils.add_issue_comment(comment, github_issue_owner, github_issue_repo, issue_number, github_token=github_token)
     if label:
-        Xadd_label_to_issue(label, github_issue_owner, github_issue_repo, issue_number, github_token=github_token)
+        gh_utils.add_label_to_issue(
+            label, github_issue_owner, github_issue_repo, issue_number, github_token=github_token
+        )
