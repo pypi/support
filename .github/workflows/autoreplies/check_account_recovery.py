@@ -92,14 +92,6 @@ def format_markdown_gh_user_link(gh_user: str) -> str:
     return f"[{gh_user}](https://github.com/{gh_user}/)"
 
 
-def X_add_issue_comment(
-    comment: str, github_issue_owner: str, github_issue_repo: str, issue_number: str, github_token: str = None
-):
-    print()
-    print(comment)
-    print()
-
-
 if __name__ == "__main__":
     issue_number = os.environ.get("ISSUE_NUMBER", "4386")
     github_token = os.environ.get("GITHUB_TOKEN", None)
@@ -126,8 +118,7 @@ if __name__ == "__main__":
 
     # If the pypi user is not a maintainer for any packages
     if not packages:
-        # gh_utils.add_issue_comment(
-        X_add_issue_comment(
+        gh_utils.add_issue_comment(
             f"User {pypi_user_link} has no packages",
             github_issue_owner,
             github_issue_repo,
@@ -179,10 +170,9 @@ if __name__ == "__main__":
     comment = "\n\n".join(["### Package Ownership", table, BOT_NOTICE])
 
     try:
-        # gh_utils.add_issue_comment(
-        #    comment, github_issue_owner, github_issue_repo, issue_number, github_token=github_token
-        # )
-        X_add_issue_comment(comment, github_issue_owner, github_issue_repo, issue_number, github_token=github_token)
+        gh_utils.add_issue_comment(
+            comment, github_issue_owner, github_issue_repo, issue_number, github_token=github_token
+        )
     except Exception as e:
         print(f"Failed to add comment to issue {issue_number}: {e}")
         print("Comment:")
