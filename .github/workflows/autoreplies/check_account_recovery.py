@@ -1,6 +1,26 @@
-"""Parse a GitHub issue to determine the best path forward for account recovery requests.
+"""Parse a GitHub issue to automatically aggregate package ownership information to facilitate account recovery.
 
+Steps
+1) finds all PyPI packages maintained by the user
+2) checks each PyPI package to see if its source code repository listed at PyPI belongs to the github user
+3) adds a comment to the issue summarizing the package ownership information
 
+If the github user owns the source code repositories for all of the PyPI packages, or is an administrator for the github
+organization that owns them, then the issue is automatically labeled with "fasttrack".
+
+Environment Variables
+---------------------
+GITHUB_ISSUE_OWNER
+    The owner (e.g., "pypi") of the issue repository
+
+GITHUB_ISSUE_REPO
+    The repository (e.g., "support") where the issue is located
+
+ISSUE_NUMBER
+    The number of the issue to process
+
+GITHUB_TOKEN
+    (Optional) A GitHub token with permissions to comment on the issue and read the repository.
 """
 
 import os
@@ -10,12 +30,22 @@ import pypi_utils
 import gh_utils
 
 
+# Issue body headers
 PYPI_USER_HEADER = "PyPI Username"
 
+# Ownership status levels
+BELONGS = 0
+ORG_ADMIN = 1
+ORG_MEMBER = 2
+UNKNOWN_OWERNSHIP = 3
+NO_REPO = 4
 
-NO_REPO = "None listed"
-UNKNOWN_OWERNSHIP = "May not belong to user"
-BELONGS = "Belongs to user"
+# This notice indicates that the final determination of account recovery rests with the PyPI team
+BOT_NOTICE = (
+    "### NOTE\n\n"
+    "_This action was performed automatically by a bot and **does not guarantee account recovery**. Account recovery"
+    " requires manual approval processing by the PyPI team._"
+)
 
 
 def sanitize_pypi_user(username: str) -> str:
@@ -28,29 +58,25 @@ def sanitize_pypi_user(username: str) -> str:
     return username.strip().replace("`", "")
 
 
-def Xadd_issue_comment(comment: str, gh_user: str, repo_name: str, issue_number, github_token=None):
-    print()
-    print("Comment")
-    print()
-    print(comment)
-    print()
+def format_markdown_table(rows: list) -> str:
+    """Format a list of rows into a markdown table.
 
-
-def Xadd_label_to_issue(label: str, gh_user: str, repo_name: str, issue_number, github_token=None):
-    print()
-    print("Label")
-    print()
-    print(label)
-    print()
-
-
-def format_markdown_table(header: list, rows: list) -> str:
-    """Format a list of rows into a markdown table."""
+    Parameters
+    ----------
+    rows: list
+        A list of rows to format into a table. Each row should be [package_link, repo_url, ownership_level] where
+        ownership_level is an int indicating which column to mark with an "X".
+    """
+    header = ["Package", "Repository", "Owner", "Admin", "Member", "Unknown", "No Repo"]
     row_strings = []
     row_strings.append(" | ".join(header))
-    row_strings.append(" | ".join(["---"] * len(header)))
+    row_strings.append(" | ".join(["---"] * 2 + [":-:"] * (len(header) - 2)))
     for row in rows:
-        row_strings.append(" | ".join(row))
+        row_fields = [""] * len(header)
+        row_fields[0] = row[0]
+        row_fields[1] = row[1]
+        row_fields[2 + row[2]] = "X"
+        row_strings.append(" | ".join(row_fields))
     return "\n".join(row_strings)
 
 
@@ -66,8 +92,16 @@ def format_markdown_gh_user_link(gh_user: str) -> str:
     return f"[{gh_user}](https://github.com/{gh_user}/)"
 
 
+def X_add_issue_comment(
+    comment: str, github_issue_owner: str, github_issue_repo: str, issue_number: str, github_token: str = None
+):
+    print()
+    print(comment)
+    print()
+
+
 if __name__ == "__main__":
-    issue_number = os.environ.get("ISSUE_NUMBER", "4343")
+    issue_number = os.environ.get("ISSUE_NUMBER", "4386")
     github_token = os.environ.get("GITHUB_TOKEN", None)
     github_issue_owner = os.environ.get("GITHUB_ISSUE_OWNER", "pypi")
     github_issue_repo = os.environ.get("GITHUB_ISSUE_REPO", "support")
@@ -92,7 +126,8 @@ if __name__ == "__main__":
 
     # If the pypi user is not a maintainer for any packages
     if not packages:
-        gh_utils.add_issue_comment(
+        # gh_utils.add_issue_comment(
+        X_add_issue_comment(
             f"User {pypi_user_link} has no packages",
             github_issue_owner,
             github_issue_repo,
@@ -104,51 +139,59 @@ if __name__ == "__main__":
     # Loop over all packages to see if they belong to the user
     package_ownership = []  # List of [package_name, repo_url, ownership_status]
     for package_name in packages:
-        package_md_link = format_markdown_package_link(package_name)
+        pypi_package_link = format_markdown_package_link(package_name)
         package = pypi_utils.get_pypi_project_info(package_name)
 
         # Package has source code repo listed at PyPI
         if "repository_url" not in package:
-            package_ownership.append([package_md_link, "", NO_REPO])
+            package_ownership.append([pypi_package_link, "", NO_REPO])
             continue
 
-        package_repo = package["repository_url"]
+        package_repo_url = package["repository_url"]
 
-        # Package source code may not belong to the user
-        if not (
-            gh_utils.is_github_repo_belonging_to_owner(package_repo, gh_user)
-            or gh_utils.is_github_pages_belonging_to_owner(package_repo, gh_user)
-        ):
-            package_ownership.append([package_md_link, package_repo, UNKNOWN_OWERNSHIP])
+        # Package source repo directly belongs to the gh_user
+        if gh_utils.does_user_own_repo(package_repo_url, gh_user):
+            package_ownership.append([pypi_package_link, package_repo_url, BELONGS])
+            continue
+
+        # If package source repo belongs to an organization - check if the gh_user is a member or admin
+        org_status = gh_utils.get_user_role_in_org(package_repo_url, gh_user)
+        if org_status == "admin":
+            package_ownership.append([pypi_package_link, package_repo_url, ORG_ADMIN])
+        elif org_status == "member":
+            package_ownership.append([pypi_package_link, package_repo_url, ORG_MEMBER])
+
+        # Otherwise the source repo may not belong to the gh_user
         else:
-            package_ownership.append([package_md_link, package_repo, BELONGS])
+            package_ownership.append([pypi_package_link, package_repo_url, UNKNOWN_OWERNSHIP])
 
     # Add a comment to the issue with the package ownership information
-    header = ["Package", "Repository", "Ownership"]
-    table = format_markdown_table(header, package_ownership)
+    table = format_markdown_table(package_ownership)
 
-    unknown_ownership = [row[1] for row in package_ownership if row[-1] != BELONGS]
-    label = None
+    # Count how many packages are not owned or administered by the user
+    num_unverified = len([row for row in package_ownership if row[2] > ORG_ADMIN])
 
-    if len(unknown_ownership) == 0:
-        approval_message = f"All projects maintained by {pypi_user_link} belong to the gh user {gh_user_link}"
+    if num_unverified == 0:
         label = "fasttrack"
     else:
-        approval_message = f"{len(unknown_ownership)} projects may not belong to the gh user {gh_user_link}"
+        label = ""
 
-    comment = f"""\
-## Package Ownership
+    comment = "\n\n".join(["### Package Ownership", table, BOT_NOTICE])
 
-{table}
+    try:
+        # gh_utils.add_issue_comment(
+        #    comment, github_issue_owner, github_issue_repo, issue_number, github_token=github_token
+        # )
+        X_add_issue_comment(comment, github_issue_owner, github_issue_repo, issue_number, github_token=github_token)
+    except Exception as e:
+        print(f"Failed to add comment to issue {issue_number}: {e}")
+        print("Comment:")
+        print(comment)
 
-{approval_message}
-
-## NOTE
-
-This action was performed by a bot. Account recovery requires manual approval by processing by PyPI."""
-
-    gh_utils.add_issue_comment(comment, github_issue_owner, github_issue_repo, issue_number, github_token=github_token)
-    if label:
-        gh_utils.add_label_to_issue(
-            label, github_issue_owner, github_issue_repo, issue_number, github_token=github_token
-        )
+    if label and False:
+        try:
+            gh_utils.add_label_to_issue(
+                label, github_issue_owner, github_issue_repo, issue_number, github_token=github_token
+            )
+        except Exception as e:
+            print(f"Failed to add label to issue {issue_number}: {e}")

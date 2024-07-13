@@ -6,9 +6,6 @@ import requests
 from bs4 import BeautifulSoup
 
 
-RE_GH_ISSUE_HEADER = re.compile(r"###\s*(?P<key>.+)")
-
-
 def get_packages_by_user(username: str) -> list:
     """Parse html to get a list of packages for a given PyPI user.
 
@@ -35,19 +32,20 @@ def get_packages_by_user(username: str) -> list:
         list
             A list of package names
     """
-    RE_PROJECT_COUNT = re.compile(r"\s*(?P<num_projects>\d+)\s*project(?:s)?")
     time.sleep(1)
     url = f"https://pypi.org/user/{username}/"
     response = requests.get(url)
     if response.status_code == 200:
         soup = BeautifulSoup(response.content, "html.parser")
 
-        # Get reported
+        # Get the reported number of projects maintained by this user, to ensure we later don't miss any
         num_projects_text = soup.find("h2").text.lower()
-        num_projects_text = num_projects_text.replace("No projects", "0 projects")
+        num_projects_text = num_projects_text.replace("no projects", "0 projects")
+
+        RE_PROJECT_COUNT = re.compile(r"\s*(?P<num_projects>\d+)\s*project(?:s)?")
         re_num_project_match = RE_PROJECT_COUNT.match(num_projects_text)
         if not re_num_project_match:
-            raise ValueError(f"Could not determine the bumber of projects for user {username}")
+            raise ValueError(f"Could not determine the number of projects for user {username}")
 
         num_projects = int(re_num_project_match.group("num_projects"))
         packages = [a.text.strip().split("\n")[0] for a in soup.find_all("a", class_="package-snippet")]
