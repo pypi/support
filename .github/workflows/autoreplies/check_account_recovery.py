@@ -178,7 +178,7 @@ if __name__ == "__main__":
         print("Comment:")
         print(comment)
 
-    if label and False:
+    if label:
         try:
             gh_utils.add_label_to_issue(
                 label, github_issue_owner, github_issue_repo, issue_number, github_token=github_token
