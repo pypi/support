@@ -134,7 +134,7 @@ if __name__ == "__main__":
         package = pypi_utils.get_pypi_project_info(package_name)
 
         # Package has source code repo listed at PyPI
-        if "repository_url" not in package:
+        if "repository_url" not in package or not package["repository_url"]:
             package_ownership.append([pypi_package_link, "", NO_REPO])
             continue
 

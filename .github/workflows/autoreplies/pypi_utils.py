@@ -69,7 +69,7 @@ def get_pypi_project_info(package_name: str) -> Dict[str, str]:
     -------
         Dict[str, str]
             A dictionary containing the following keys:
-                - repository_url (may be "Not specified" if no repository or homepage is listed)
+                - repository_url ("" if no repository or homepage is listed)
                 - author
                 - author_email
     """
@@ -85,7 +85,7 @@ def get_pypi_project_info(package_name: str) -> Dict[str, str]:
     author = info.get("author")
     author_email = info.get("author_email")
     return {
-        "repository_url": project_urls.get("Source", project_urls.get("Homepage", "Not specified")),
+        "repository_url": project_urls.get("Source", project_urls.get("Homepage", "")),
         "author": author,
         "author_email": author_email,
     }
