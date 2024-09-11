@@ -1,0 +1,31 @@
+name: Issue Label Trigger
+
+on:
+  issues:
+    types: [labeled]
+
+jobs:
+  parse-issue:
+    runs-on: ubuntu-latest
+    if: contains(github.event.issue.labels.*.name, 'account-recovery')
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.x'
+
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r .github/workflows/autoreplies/requirements.txt
+
+    - name: Run Python script
+      run: python .github/workflows/autoreplies/check_account_recovery.py
+      env:
+        ISSUE_NUMBER: ${{ github.event.issue.number }}
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        GITHUB_ISSUE_OWNER: ${{ github.repository_owner }}
+        GITHUB_ISSUE_REPO: ${{ github.event.repository.name }}
