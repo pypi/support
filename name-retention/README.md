@@ -12,6 +12,7 @@ This is incomplete and doesn't account for special cases.
 From anywhere in the flow, if the process feels wrong: move to *Special case* and consult with colleagues or PyPI admins.
 
 ```mermaid
+%%{init: {"flowchart": {"htmlLabels": false}} }%%
 flowchart TD
 NEW[[New PEP 541 ticket]] --> NEW_isdone{{"Is the request already resolved (transferred/deleted)?"}}
 NEW_isdone --> |yes| NEW_done[Comment on issue] --> NEW_tbd(((TBD)))
