@@ -33,8 +33,8 @@ end
 subgraph ABTR_subgraph [Transfer of an abandoned project]
     ABTR[[Transferring abandoned project]] --> ABTR_init[Comment “Initial response”] --> ABTR_r[Send “Reachability -- abandoned project”] --> ABTR_wait["Wait 2 weeks (Reachability)"] --> ABTR_resp{{Owner response?}}
     ABTR_resp --> |want to keep| ABTR_keep["Comment with “owner is reachable” (recommend closing issue)"]
-    ABTR_resp --> |want to transfer| ABTR_rq["Comment “Transfer per owner's request” (recommend transferring)"]
-    ABTR_resp --> |no response| ABTR_iter{{Was this the 3rd reacahbility mail?}} --> |no| ABTR_r
+    ABTR_resp --> |want to transfer| ABTR_rq["Comment “Transfer per ownerʼs request” (recommend transferring)"]
+    ABTR_resp --> |no response| ABTR_iter{{Was this the 3rd reachability mail?}} --> |no| ABTR_r
     ABTR_iter --> |yes| ABTR_t[Send “Transfer notice for abandoned project”] --> ABTR_tc["Comment “Transfer abandoned project” (recommend transferring)"]
 end
 
