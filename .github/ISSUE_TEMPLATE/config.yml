@@ -2,10 +2,10 @@
 blank_issues_enabled: false  # default is true
 contact_links:
 - name: Organizations Feature Support
-  url: mailto:support+orgs@pypi.org
+  url: https://docs.pypi.org/organization-accounts/support/#organization-features
   about: For support related to using Organizations Features on PyPI
 - name: Organizations Billing Support
-  url: mailto:support+orgs-billing@pypi.org
+  url: https://docs.pypi.org/organization-accounts/support/#organization-billing
   about: For support related to Organization billing, or changing Organization Types
 - name: Feature Request, UX issue or bug?
   url: https://github.com/pypa/warehouse/issues/new/choose
