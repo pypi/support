@@ -1,6 +1,12 @@
 # Ref: https://help.github.com/en/github/building-a-strong-community/configuring-issue-templates-for-your-repository#configuring-the-template-chooser
 blank_issues_enabled: false  # default is true
 contact_links:
+- name: Organizations Feature Support
+  url: mailto:support+orgs@pypi.org
+  about: For support related to using Organizations Features on PyPI
+- name: Organizations Billing Support
+  url: mailto:support+orgs-billing@pypi.org
+  about: For support related to Organization billing, or changing Organization Types
 - name: Feature Request, UX issue or bug?
   url: https://github.com/pypa/warehouse/issues/new/choose
   about: Please open these under `pypa/warehouse`
