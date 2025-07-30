@@ -7,14 +7,29 @@ body:
 - type: markdown
   attributes:
     value: |
-      ⚠
-      This issue should be for problems accessing PyPI itself, including:
-      * pypi.org
-      * test.pypi.org
-      * files.pythonhosted.org
-  
-      This issue **should NOT** be for any non-PyPI properties (like
-      python.org, docs.python.org, etc.)
+      > [!CAUTION]
+      > Before using this form to report a new issue, please verify that it has
+      > not already been documented on the [Python Infrastructure Status Page].
+      > Remember to scroll to the *Past Incidents* to see if there is something
+      > that has recently been addressed.
+      >
+      > Verify first that your issue is not [already reported on GitHub][issue
+      > search].
+
+      > [!WARNING]
+      > This issue should be for problems accessing PyPI itself, including:
+      > * pypi.org
+      > * test.pypi.org
+      > * files.pythonhosted.org
+      >
+      > This issue **should NOT** be for any non-PyPI properties (like
+      > python.org, docs.python.org, etc.)
+
+      *Please fill out the form below with as many precise
+      details as possible.*
+
+      [issue search]: /pypi/support/search?q=is%3Aissue&type=issues
+      [Python Infrastructure Status Page]: https://status.python.org
 
 - type: textarea
   attributes:
