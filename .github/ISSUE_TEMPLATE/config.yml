@@ -1,6 +1,9 @@
 # Ref: https://help.github.com/en/github/building-a-strong-community/configuring-issue-templates-for-your-repository#configuring-the-template-chooser
 blank_issues_enabled: false  # default is true
 contact_links:
+- name: Python Infrastructure Status Page
+  url: https://status.python.org
+  about: Please check this page, prior to reporting possible PyPI outages
 - name: Organizations Feature Support
   url: https://docs.pypi.org/organization-accounts/support/#organization-features
   about: For support related to using Organizations Features on PyPI
