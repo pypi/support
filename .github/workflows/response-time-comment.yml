@@ -1,0 +1,98 @@
+name: Response time expectations
+
+on:
+  issues:
+    types: [opened]
+
+# No workflow-level permissions; the single job below grants only what it needs.
+permissions: {}
+
+# Per-issue concurrency: keeps any future re-trigger on the same issue from
+# racing itself. The group key uses github.event.issue.number, a
+# server-generated integer that is not user-controllable.
+concurrency:
+  group: response-time-${{ github.event.issue.number }}
+  cancel-in-progress: false
+
+# Security note: this workflow uses actions/github-script (Node, not shell),
+# and untrusted issue payload fields (title, body, label names, etc.) are
+# never interpolated into a `run:` block. The only ${{ }} expression in this
+# file is github.event.issue.number above, a GitHub-generated integer.
+# Untrusted data is accessed via JS property reads inside the github-script
+# step.
+# Reference: https://github.blog/security/vulnerability-research/how-to-catch-github-actions-workflow-injections-before-attackers-do/
+
+jobs:
+  comment:
+    name: Post first-response expectation
+    runs-on: ubuntu-latest
+    permissions:
+      issues: write  # for github.rest.issues.createComment on the new issue
+    steps:
+      - uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9.0.0
+        with:
+          script: |
+            const MEMBER_ASSOCIATIONS = new Set(['OWNER', 'MEMBER', 'COLLABORATOR']);
+
+            const issue = context.payload.issue;
+            const owner = context.repo.owner;
+            const repo = context.repo.repo;
+
+            if (issue.user && issue.user.type === 'Bot') {
+              core.info('Issue opened by a bot; skipping.');
+              return;
+            }
+
+            // Issue forms in this repo apply exactly one label, so labels[0]
+            // is the right choice. Manually-opened issues may have no label.
+            const labels = (issue.labels || []).map(l => l.name);
+            const primaryLabel = labels[0] || null;
+
+            // First-page-only is intentional: an issue with >100 comments
+            // before any maintainer reply is vanishingly rare.
+            async function hasMemberResponded(num) {
+              const { data: comments } = await github.rest.issues.listComments({
+                owner, repo, issue_number: num, per_page: 100,
+              });
+              return comments.some(c =>
+                MEMBER_ASSOCIATIONS.has(c.author_association) &&
+                c.user && c.user.type !== 'Bot'
+              );
+            }
+
+            async function queueAhead(label) {
+              if (!label) return 0;
+              const q = `repo:${owner}/${repo} is:issue is:open label:"${label}" created:<${issue.created_at}`;
+              const found = await github.paginate(
+                github.rest.search.issuesAndPullRequests, { q, per_page: 100 }
+              );
+              let count = 0;
+              for (const it of found) {
+                if (it.number === issue.number) continue;
+                if (!(await hasMemberResponded(it.number))) count++;
+              }
+              return count;
+            }
+
+            try {
+              const ahead = await queueAhead(primaryLabel);
+
+              let queueLine = '';
+              if (primaryLabel && ahead === 1) {
+                queueLine = `There is currently 1 other open ${primaryLabel} issue ahead of this one.`;
+              } else if (primaryLabel && ahead > 1) {
+                queueLine = `There are currently ${ahead} other open ${primaryLabel} issues ahead of this one.`;
+              }
+
+              const lines = [`Thanks for filing.`, ``];
+              if (queueLine) lines.push(queueLine, ``);
+              lines.push(
+                `PyPI support is one paid staffer, plus volunteers, plus whatever part-time hours other PSF staff have to give. Often that's zero. If you'd like to help fund more staffing, the PSF takes donations at https://www.python.org/psf/donations/. Either way, someone will get to your request eventually.`
+              );
+
+              await github.rest.issues.createComment({
+                owner, repo, issue_number: issue.number, body: lines.join('\n'),
+              });
+            } catch (err) {
+              core.warning(`Failed to post response-time comment: ${err.message}`);
+            }
