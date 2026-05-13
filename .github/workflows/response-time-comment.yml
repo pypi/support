@@ -43,6 +43,11 @@ jobs:
               return;
             }
 
+            if (MEMBER_ASSOCIATIONS.has(issue.author_association)) {
+              core.info(`Issue opened by ${issue.author_association}; skipping.`);
+              return;
+            }
+
             // Issue forms in this repo apply exactly one label, so labels[0]
             // is the right choice. Manually-opened issues may have no label.
             const labels = (issue.labels || []).map(l => l.name);
@@ -60,6 +65,26 @@ jobs:
               );
             }
 
+            // Issues already tracked on a project board (e.g. "Pending admin
+            // action") are being worked elsewhere; don't count them as queue
+            // ahead. On any error (e.g. token lacks project read), fall back
+            // to false so the issue still counts — same as old behavior.
+            async function isOnAnyProject(num) {
+              try {
+                const r = await github.graphql(
+                  `query($owner: String!, $repo: String!, $num: Int!) {
+                     repository(owner: $owner, name: $repo) {
+                       issue(number: $num) { projectItems(first: 1) { totalCount } }
+                     }
+                   }`,
+                  { owner, repo, num }
+                );
+                return r.repository.issue.projectItems.totalCount > 0;
+              } catch (_) {
+                return false;
+              }
+            }
+
             async function queueAhead(label) {
               if (!label) return 0;
               const q = `repo:${owner}/${repo} is:issue is:open label:"${label}" created:<${issue.created_at}`;
@@ -69,7 +94,9 @@ jobs:
               let count = 0;
               for (const it of found) {
                 if (it.number === issue.number) continue;
-                if (!(await hasMemberResponded(it.number))) count++;
+                if (await hasMemberResponded(it.number)) continue;
+                if (await isOnAnyProject(it.number)) continue;
+                count++;
               }
               return count;
             }
