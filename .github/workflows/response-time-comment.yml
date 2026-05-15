@@ -53,51 +53,63 @@ jobs:
             const labels = (issue.labels || []).map(l => l.name);
             const primaryLabel = labels[0] || null;
 
-            // First-page-only is intentional: an issue with >100 comments
-            // before any maintainer reply is vanishingly rare.
-            async function hasMemberResponded(num) {
-              const { data: comments } = await github.rest.issues.listComments({
-                owner, repo, issue_number: num, per_page: 100,
-              });
-              return comments.some(c =>
-                MEMBER_ASSOCIATIONS.has(c.author_association) &&
-                c.user && c.user.type !== 'Bot'
-              );
-            }
-
-            // Issues already tracked on a project board (e.g. "Pending admin
-            // action") are being worked elsewhere; don't count them as queue
-            // ahead. On any error (e.g. token lacks project read), fall back
-            // to false so the issue still counts — same as old behavior.
-            async function isOnAnyProject(num) {
-              try {
-                const r = await github.graphql(
-                  `query($owner: String!, $repo: String!, $num: Int!) {
-                     repository(owner: $owner, name: $repo) {
-                       issue(number: $num) { projectItems(first: 1) { totalCount } }
-                     }
-                   }`,
-                  { owner, repo, num }
-                );
-                return r.repository.issue.projectItems.totalCount > 0;
-              } catch (_) {
-                return false;
-              }
-            }
-
+            // One paginated GraphQL search pulls projectItems and the first
+            // 100 comments for each candidate, so this runs in O(pages) calls
+            // instead of O(2N). We only look at the first 100 comments per
+            // candidate — no issue in this repo has buried a maintainer reply
+            // deeper than that.
             async function queueAhead(label) {
               if (!label) return 0;
               const q = `repo:${owner}/${repo} is:issue is:open label:"${label}" created:<${issue.created_at}`;
-              const found = await github.paginate(
-                github.rest.search.issuesAndPullRequests, { q, per_page: 100 }
-              );
-              let count = 0;
-              for (const it of found) {
-                if (it.number === issue.number) continue;
-                if (await hasMemberResponded(it.number)) continue;
-                if (await isOnAnyProject(it.number)) continue;
-                count++;
+
+              let total = 0, onProject = 0, memberResponded = 0, count = 0;
+              let cursor = null;
+
+              while (true) {
+                const r = await github.graphql(
+                  `query($q: String!, $cursor: String) {
+                     search(query: $q, type: ISSUE, first: 100, after: $cursor) {
+                       pageInfo { hasNextPage endCursor }
+                       nodes {
+                         ... on Issue {
+                           number
+                           projectItems(first: 1) { totalCount }
+                           comments(first: 100) {
+                             nodes {
+                               authorAssociation
+                               author { __typename }
+                             }
+                           }
+                         }
+                       }
+                     }
+                   }`,
+                  { q, cursor }
+                );
+
+                for (const it of r.search.nodes) {
+                  if (!it || it.number === issue.number) continue;
+                  total++;
+                  if (it.projectItems && it.projectItems.totalCount > 0) {
+                    onProject++;
+                    continue;
+                  }
+                  const hasMember = (it.comments?.nodes || []).some(c =>
+                    MEMBER_ASSOCIATIONS.has(c.authorAssociation) &&
+                    c.author && c.author.__typename !== 'Bot'
+                  );
+                  if (hasMember) {
+                    memberResponded++;
+                    continue;
+                  }
+                  count++;
+                }
+
+                if (!r.search.pageInfo.hasNextPage) break;
+                cursor = r.search.pageInfo.endCursor;
               }
+
+              core.info(`queueAhead(${label}): total=${total} on_project=${onProject} member_responded=${memberResponded} counted=${count}`);
               return count;
             }
 
